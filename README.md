@@ -19,14 +19,3 @@ This repository is my personal space to:
 
 ## 📂 Repository Structure
 Each chapter has its own folder, and inside it are my solutions to the programming challenges.
-
-cpp-starting-out-challenges/
-├── Chapter01/
-│ ├── challenge1.cpp
-│ ├── challenge2.cpp
-│ └── ...
-├── Chapter02/
-│ ├── challenge1.cpp
-│ ├── challenge2.cpp
-│ └─
-└── ...
