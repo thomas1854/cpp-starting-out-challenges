@@ -1,3 +1,10 @@
+/*
+Challenge 01:
+    1. Binary Tree Template
+    Write your own version of a class template that will create a binary tree that can hold
+    values of any data type.Demonstrate the class with a driver program.
+*/
+
 #include <iostream>
 #include <string>
 #include "BinaryTree.h"
