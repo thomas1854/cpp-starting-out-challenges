@@ -247,6 +247,8 @@ void BinaryTree<T>::destroySubtree(TreeNode* nodePtr)
         // Recursively delete the right subtree
         if (nodePtr->right)
             destroySubtree(nodePtr->right);
+        // Adjust counter as nodes are deleted
+        nodesCounter--;    
         // Delete the current node
         delete nodePtr;
     }
