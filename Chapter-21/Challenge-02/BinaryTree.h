@@ -8,9 +8,9 @@ template<typename T>
 class BinaryTree
 {
 private:
-    // Static counter to track the total number of nodes in the BinaryTree.
+    // Counter to track the total number of nodes in the BinaryTree.
     // Incremented on node insertion and decremented on node deletion.
-    static int nodesCounter;
+    int nodesCounter = 0;
 
     // Inner struct representing a node in the binary tree
     struct TreeNode
@@ -68,10 +68,6 @@ public:
     // Returns the total number of nodes in the tree
     int getNodesCount() const;
 };
-
-// Initialize static member
-template<typename T>
-int BinaryTree<T>::nodesCounter = 0;
 
 // Inserts a new node with the given value into the tree
 template<typename T>
