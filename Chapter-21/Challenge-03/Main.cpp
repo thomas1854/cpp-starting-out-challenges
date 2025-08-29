@@ -1,5 +1,12 @@
+/*
+Challenge 03:
+     3. Leaf Counter
+     Write a member function, for the template you designed in Programming 
+     Challenge 1 that counts and returns the number of leaf nodes in the tree. 
+     Demonstrate the function in a driver program.
+*/
+
 #include <iostream>
-#include <cassert>
 #include "BinaryTree.h"
 
 int main()
