@@ -12,6 +12,10 @@ private:
     // Incremented on node insertion and decremented on node deletion.
     int nodesCounter = 0;
 
+    // Counter to track the number of leaf (terminal) nodes in the BinaryTree.
+    // Update this when leaf nodes are created or removed.
+    int leafNodeCounter = 0;
+
     // Inner struct representing a node in the binary tree
     struct TreeNode
     {
@@ -67,6 +71,9 @@ public:
 
     // Returns the total number of nodes in the tree
     int getNodesCount() const;
+
+    // Returns the total number of leaf nodes in the tree
+    int getLeafNodesCount() const;
 };
 
 // Inserts a new node with the given value into the tree
@@ -82,12 +89,18 @@ void BinaryTree<T>::insertNode(T val)
     // Insert the new node into the tree starting from the root
     insert(root, newNode);
     nodesCounter++; // Increment counter when a new node is inserted
+    leafNodeCounter++; // New nodes are created as leaves — increment leaf-node count (adjust elsewhere if an existing leaf becomes internal).
 }
 
 // Recursive helper method to insert a new node into the tree
 template<typename T>
 void BinaryTree<T>::insert(TreeNode*& nodePtr, TreeNode*& newNode)
 {
+    // If nodePtr is non-null and currently a leaf (both children are null),
+    // attaching newNode as a child will make nodePtr internal — decrement the leaf counter.
+    if (nodePtr && nodePtr->left == nullptr && nodePtr->right == nullptr)
+        leafNodeCounter--;
+
     // If the current node is null, place the new node here
     if (nodePtr == nullptr)
         nodePtr = newNode;
@@ -173,6 +186,27 @@ void BinaryTree<T>::remove(T val)
 template<typename T>
 void BinaryTree<T>::deleteNode(TreeNode*& nodePtr, T val)
 {
+    // If nodePtr is the parent of the node to delete, pre-adjust the leaf counter:
+    // deleting a child that is currently a leaf can make the parent become a leaf
+    // (when the parent has no other child). Detect those cases and increment
+    // leafNodeCounter so the count stays correct after removal.
+    if (nodePtr != nullptr && nodePtr->right != nullptr && nodePtr->right->value == val)
+    {
+        // Right child matches the value-to-delete. If that right child is a leaf
+        // and the parent has no left child, the parent will become a leaf after
+        // the right child is removed — increment the leaf counter.
+        if (nodePtr->right->left == nullptr && nodePtr->right->right == nullptr && nodePtr->left == nullptr)
+            leafNodeCounter++;
+    }
+    else if (nodePtr != nullptr && nodePtr->left != nullptr && nodePtr->left->value == val)
+    {
+        // Left child matches the value-to-delete. If that left child is a leaf
+        // and the parent has no right child, the parent will become a leaf after
+        // the left child is removed — increment the leaf counter.
+        if (nodePtr->left->left == nullptr && nodePtr->left->right == nullptr && nodePtr->right == nullptr)
+            leafNodeCounter++;
+    }
+
     // If the current node is null, nothing to delete
     if (nodePtr == nullptr)
         std::cout << "Cannot delete empty node." << std::endl;
@@ -184,7 +218,12 @@ void BinaryTree<T>::deleteNode(TreeNode*& nodePtr, T val)
         deleteNode(nodePtr->left, val);
     // If the value matches, perform the deletion
     else
+    {
+        // If nodePtr has no children it's a leaf — decrement the leaf-node counter
+        if (nodePtr->left == nullptr && nodePtr->right == nullptr) 
+            leafNodeCounter--;
         makeDeletion(nodePtr);
+    }
 }
 
 // Handles the deletion of a node, adjusting the tree structure
@@ -221,6 +260,13 @@ void BinaryTree<T>::makeDeletion(TreeNode*& nodePtr)
         // Find the leftmost node in the right subtree (smallest value)
         while (tempNodePtr->left)
             tempNodePtr = tempNodePtr->left;
+
+        // If the successor has no right child it was previously a leaf.
+        // Attaching the deleted node's left subtree to this successor makes it internal,
+        // so decrement the leaf counter to keep leafNodeCounter accurate.
+        if (tempNodePtr->right == nullptr)
+            leafNodeCounter--;
+
         // Attach the left subtree of the node being deleted to the leftmost node
         tempNodePtr->left = nodePtr->left;
         tempNodePtr = nodePtr;
@@ -237,16 +283,23 @@ void BinaryTree<T>::destroySubtree(TreeNode* nodePtr)
 {
     if (nodePtr)
     {
-        // Recursively delete the left subtree
+        // Record whether this node is a leaf before recursing (children will be deleted)
+        bool wasLeaf = (nodePtr->left == nullptr && nodePtr->right == nullptr);
+
+        // Recursively delete children
         if (nodePtr->left)
             destroySubtree(nodePtr->left);
-        // Recursively delete the right subtree
         if (nodePtr->right)
             destroySubtree(nodePtr->right);
-        // Adjust counter as nodes are deleted
-        nodesCounter--;    
-        // Delete the current node
+
+        // Adjust counters based on the original node state
+        if (wasLeaf)
+            leafNodeCounter--;
+        nodesCounter--;
+
+        // Delete this node
         delete nodePtr;
+        nodePtr = nullptr;
     }
 }
 
@@ -255,5 +308,12 @@ template<typename T>
 int BinaryTree<T>::getNodesCount() const
 {
     return nodesCounter;
+}
+
+// Returns the total number of leaf nodes in the tree
+template<typename T>
+int BinaryTree<T>::getLeafNodesCount() const
+{
+    return leafNodeCounter;
 }
 #endif
