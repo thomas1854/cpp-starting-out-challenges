@@ -1,3 +1,12 @@
+/*
+Challenge 08:
+    8. Arithmetic Progression Series
+    In an arithmetic progression (A.P.) series, each element can be calculated by adding a 
+    fixed number (called the common difference) to the previous element. Write a recursive 
+    function that prints an A.P. series. The function should accept the first term, the com
+    mon difference, and the number of terms as arguments. Test with a driver program.
+*/
+
 /**
  * @file Main.cpp
  * @brief Prints an arithmetic progression using recursion
