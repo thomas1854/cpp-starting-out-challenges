@@ -3,8 +3,8 @@
  * @brief Template-based stack implementation using a linked list
  */
 
-#ifndef DYNAMICSTACK_H
-#define DYNAMICSTACK_H
+#ifndef STACK_H
+#define STACK_H
 #include <iostream>
 using namespace std;
 
@@ -36,7 +36,11 @@ private:
     };
     
     StackNode* top;  ///< Pointer to the top of the stack
-    
+    /**
+     * @brief Recursively copies nodes from another stack in correct order.
+     * @param stackNode Pointer to the node to copy from the source stack.
+     */
+    void copyStack(StackNode* stackNode);
 public:
     /**
      * @brief Constructs an empty stack
@@ -46,6 +50,12 @@ public:
         top = nullptr;
     }
     
+    /**
+     * @brief Constructs a stack initialized with a copy of another stack object
+     * @param obj is the stack object to be copied
+     */
+    Stack(const Stack& obj);
+
     /**
      * @brief Checks if the stack is empty
      * @return true if stack is empty, false otherwise
@@ -118,5 +128,21 @@ Stack<T>::~Stack()
         nodePtr = nodePtr->next;
         delete temp;
     }
+}
+
+template<typename T>
+void Stack<T>::copyStack(StackNode* const stackNode)
+{
+    if (stackNode == nullptr)
+        return;
+    copyStack(stackNode->next);
+    push(stackNode->value);
+}
+
+template<typename T>
+Stack<T>::Stack(const Stack& obj)
+{
+    top = nullptr;
+    copyStack(obj.top);
 }
 #endif
