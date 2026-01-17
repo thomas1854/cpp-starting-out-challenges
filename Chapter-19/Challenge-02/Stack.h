@@ -65,8 +65,9 @@ public:
     /**
      * @brief Pushes an item onto the stack
      * @param item The item to push
+     * @return returns true if an elemente pushed successfully, false otherwise
      */
-    void push(T item);
+    bool push(T item);
     
     /**
      * @brief Pops an item from the stack
@@ -82,15 +83,24 @@ public:
 };
 
 template<typename T>
-void Stack<T>::push(T item)
+bool Stack<T>::push(T item)
 {
-    StackNode* newNode = new StackNode(item);
-    if (isEmpty())
-        top = newNode;
-    else 
+    try
     {
-        newNode->next = top;
-        top = newNode;
+        StackNode* newNode = new StackNode(item);
+        if (isEmpty())
+            top = newNode;
+        else 
+        {
+            newNode->next = top;
+            top = newNode;
+        }
+        return true;
+    }
+    catch(const std::bad_alloc& e)
+    {
+        cerr << "ERROR: Memory allocation failed in push operation - " << e.what() << endl;
+        return false;
     }
 }
 
