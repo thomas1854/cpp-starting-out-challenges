@@ -1,6 +1,7 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 #include <iostream>
+#include <new>
 using namespace std;
 
 /**
@@ -59,8 +60,9 @@ public:
     /**
      * @brief Adds an element to the rear of the queue
      * @param value The value to add
+     * @return returns true if an elemente enqueued successfully, false otherwise
      */
-    void enqueue(T value);
+    bool enqueue(T value);
     
     /**
      * @brief Removes an element from the front of the queue
@@ -85,17 +87,26 @@ bool Queue<T>::isEmpty()
 }
 
 template<typename T>
-void Queue<T>::enqueue(T value)
+bool Queue<T>::enqueue(T value)
 {
-    QueueNode* newNode = new QueueNode(value);
-    if (isEmpty())
-        front = rear = newNode;
-    else 
+    try
     {
-        rear->next = newNode;
-        rear = newNode;
+        QueueNode* newNode = new QueueNode(value);
+        if (isEmpty())
+            front = rear = newNode;
+        else 
+        {
+            rear->next = newNode;
+            rear = newNode;
+        }
+        numItems++;
+        return true;
     }
-    numItems++;
+    catch(const std::bad_alloc& e)
+    {
+        cerr << "ERROR: Memory allocation failed in enqueue operation - " << e.what() << endl;
+        return false;
+    }
 }
 
 template<typename T>
