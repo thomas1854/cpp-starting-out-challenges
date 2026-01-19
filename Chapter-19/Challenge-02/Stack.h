@@ -73,8 +73,9 @@ public:
      * @brief Pops an item from the stack
      * @param item Reference to store the popped value
      * @note Prints error message if stack is empty
+     * @return Returns true if the value popped successfully, false otherwise
      */
-    void pop(T& item);
+    bool pop(T& item);
     
     /**
      * @brief Destroys the stack and frees all memory
@@ -105,16 +106,20 @@ bool Stack<T>::push(T item)
 }
 
 template<typename T>
-void Stack<T>::pop(T& item)
+bool Stack<T>::pop(T& item)
 {
     if (isEmpty())
+    {
         cout << "The stack is empty." << endl;
+        return false;
+    }
     else 
     {
         item = top->value;
         StackNode* temp = top;
         top = top->next;
         delete temp;
+        return true;
     }
 }
 
