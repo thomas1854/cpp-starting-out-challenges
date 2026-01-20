@@ -23,7 +23,7 @@ private:
     {
         T value;              ///< Data stored in the node
         StackNode* next;      ///< Pointer to the next node
-        
+           
         /**
          * @brief Constructs a new node
          * @param item The value to store
@@ -36,6 +36,7 @@ private:
     };
     
     StackNode* top;  ///< Pointer to the top of the stack
+    int stackSize;        ///< Size of the stack
     /**
      * @brief Recursively copies nodes from another stack in correct order.
      * @param stackNode Pointer to the node to copy from the source stack.
@@ -48,6 +49,7 @@ public:
     Stack()
     {
         top = nullptr;
+        stackSize = 0;
     }
     
     /**
@@ -78,6 +80,21 @@ public:
     bool pop(T& item);
     
     /**
+     * @brief Return the size of the stack
+     * @return Number of elements currently stored in the stack
+     */
+    int size()
+    { return stackSize; }
+
+    /**
+     * @brief Return the top value of the stack without removing it
+     * @returns Top value of the stack
+     */
+    T peek()
+    { return top->value; }
+
+
+    /**
      * @brief Destroys the stack and frees all memory
      */
     ~Stack();
@@ -96,6 +113,7 @@ bool Stack<T>::push(T item)
             newNode->next = top;
             top = newNode;
         }
+        stackSize++;
         return true;
     }
     catch(const std::bad_alloc& e)
@@ -119,6 +137,7 @@ bool Stack<T>::pop(T& item)
         StackNode* temp = top;
         top = top->next;
         delete temp;
+        stackSize--;
         return true;
     }
 }
@@ -158,6 +177,7 @@ template<typename T>
 Stack<T>::Stack(const Stack& obj)
 {
     top = nullptr;
+    stackSize = obj.stackSize;
     copyStack(obj.top);
 }
 #endif
