@@ -1,4 +1,10 @@
-
+/**
+ * Challenge-10:
+ *  10. Encrypting Filter
+ *      Write a program that opens a text file and reads its contents into a queue of characters. 
+        The program should then dequeue each character and substitute it with the character 
+        that comes five places after it in the ASCII character set, and store it in a second file.
+ */
 
 #include <iostream>
 #include <fstream>
