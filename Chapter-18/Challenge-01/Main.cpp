@@ -49,7 +49,15 @@ int main()
 
     std::cout << "Is empty: " << (list.isEmpty() ? "yes" : "no") << std::endl;
 
+    std::cout << "Original list: ";
+    list.displayList();
+    std::cout << std::endl;
+    
+    LinkedList copyList(list);
+    std::cout << "Copied list: ";
+    copyList.displayList();
+    std::cout << std::endl;
+    
     std::cout << "Cleaning up and exiting." << std::endl;
-
     return 0;
 }

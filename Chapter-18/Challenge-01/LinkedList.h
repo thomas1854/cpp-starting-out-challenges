@@ -49,6 +49,27 @@ public:
         head = nullptr;
     }
 
+    /**
+     * @brief Constructs the list with the content of another list
+     */
+    LinkedList(const LinkedList& obj)
+    {
+        head = nullptr;  
+        ListNode* node = obj.head;
+        ListNode* last = nullptr;
+        while (node != nullptr)
+        {
+            if (head == nullptr)
+                head = last = new ListNode(node->data);
+            else 
+            {
+                last->next = new ListNode(node->data);
+                last = last->next;
+            }
+            node = node->next;
+        }
+    }
+
     void append(int value)
     {
         if (isEmpty())
