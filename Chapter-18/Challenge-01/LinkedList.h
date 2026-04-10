@@ -187,5 +187,19 @@ public:
         while (!isEmpty())
             deleteNode(1);
     }
+
+    void reverseList()
+    {
+        ListNode* current = head;
+        ListNode* previous = nullptr;
+        while (current != nullptr)
+        {
+            ListNode* nextNode = current->next;
+            current->next = previous;
+            previous = current;
+            current = nextNode;
+        }
+        head = previous;
+    }
 };
 #endif

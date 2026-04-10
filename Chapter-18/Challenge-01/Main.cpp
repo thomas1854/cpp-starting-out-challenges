@@ -52,12 +52,14 @@ int main()
     std::cout << "Original list: ";
     list.displayList();
     std::cout << std::endl;
-    
+
     LinkedList copyList(list);
-    std::cout << "Copied list: ";
+    copyList.reverseList();
+    std::cout << "Reverse the list..." << std::endl;
+    std::cout << "Copied reversed list: ";
     copyList.displayList();
     std::cout << std::endl;
-    
+
     std::cout << "Cleaning up and exiting." << std::endl;
     return 0;
 }
