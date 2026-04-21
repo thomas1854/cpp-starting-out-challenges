@@ -60,6 +60,19 @@ int main()
     copyList.displayList();
     std::cout << std::endl;
 
+    std::cout << "Searching for 25 in the list..." << std::endl;
+    int position_25 = list.listSearch(25);
+    if (position_25 != -1) 
+        std::cout << "Found 25 in position " << position_25 << std::endl;
+    else 
+        std::cout << "25 not found in the list" << std::endl;
+
+    int position_10 = list.listSearch(10);
+    if (position_10 != -1) 
+        std::cout << "Found 10 in position " << position_10 << std::endl;
+    else 
+        std::cout << "10 not found in the list" << std::endl;
+        
     std::cout << "Cleaning up and exiting." << std::endl;
     return 0;
 }

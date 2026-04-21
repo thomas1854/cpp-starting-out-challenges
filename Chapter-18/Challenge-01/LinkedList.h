@@ -201,5 +201,20 @@ public:
         }
         head = previous;
     }
+
+    int listSearch(int value)
+    {
+        ListNode* currNode = head;
+        int position = 0;
+        while (currNode != nullptr)
+        {
+            if (currNode->data == value)
+                return position;
+
+            currNode = currNode->next;
+            position++;
+        }
+        return -1;
+    }
 };
 #endif
