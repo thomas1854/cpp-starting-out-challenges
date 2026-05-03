@@ -216,5 +216,38 @@ public:
         }
         return -1;
     }
+
+    void insertPosition(int position, int value)
+    {
+        if (position < 0)
+        {
+            std::cout << "Invalid position" << std::endl;
+            return;
+        }
+
+        ListNode* prev = nullptr;
+        ListNode* curr = head;
+        
+        if (position == 0)
+        {
+            ListNode* newNode = new ListNode(value, head);
+            head = newNode;
+            return;
+        }
+
+        for (int i = 0; i < position; i++)
+        {
+            if (curr == nullptr)
+            {
+                std::cout << "Invalid position" << std::endl;
+                return;
+            }
+            
+            prev = curr;
+            curr = curr->next;
+        }
+
+        prev->next = new ListNode(value, curr);
+    }
 };
 #endif

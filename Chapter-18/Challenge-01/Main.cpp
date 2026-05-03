@@ -73,6 +73,12 @@ int main()
     else 
         std::cout << "10 not found in the list" << std::endl;
         
+
+    list.insertPosition(0, 10);
+    list.insertPosition(2, 1010);
+    list.insertPosition(5, 101010);
+    list.insertPosition(100, 5);        // Expected to print invalid position
+    list.displayList();
     std::cout << "Cleaning up and exiting." << std::endl;
     return 0;
 }
