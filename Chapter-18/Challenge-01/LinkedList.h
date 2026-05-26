@@ -52,16 +52,16 @@ public:
     /**
      * @brief Constructs the list with the content of another list
      */
-    LinkedList(const LinkedList& obj)
+    LinkedList(const LinkedList &obj)
     {
-        head = nullptr;  
-        ListNode* node = obj.head;
-        ListNode* last = nullptr;
+        head = nullptr;
+        ListNode *node = obj.head;
+        ListNode *last = nullptr;
         while (node != nullptr)
         {
             if (head == nullptr)
                 head = last = new ListNode(node->data);
-            else 
+            else
             {
                 last->next = new ListNode(node->data);
                 last = last->next;
@@ -171,8 +171,8 @@ public:
 
     void displayList()
     {
-        ListNode* current = head;
-        while(current != nullptr)
+        ListNode *current = head;
+        while (current != nullptr)
         {
             std::cout << current->data;
             if (current != nullptr && current->next != nullptr)
@@ -190,11 +190,11 @@ public:
 
     void reverseList()
     {
-        ListNode* current = head;
-        ListNode* previous = nullptr;
+        ListNode *current = head;
+        ListNode *previous = nullptr;
         while (current != nullptr)
         {
-            ListNode* nextNode = current->next;
+            ListNode *nextNode = current->next;
             current->next = previous;
             previous = current;
             current = nextNode;
@@ -204,7 +204,7 @@ public:
 
     int listSearch(int value)
     {
-        ListNode* currNode = head;
+        ListNode *currNode = head;
         int position = 0;
         while (currNode != nullptr)
         {
@@ -225,12 +225,12 @@ public:
             return;
         }
 
-        ListNode* prev = nullptr;
-        ListNode* curr = head;
-        
+        ListNode *prev = nullptr;
+        ListNode *curr = head;
+
         if (position == 0)
         {
-            ListNode* newNode = new ListNode(value, head);
+            ListNode *newNode = new ListNode(value, head);
             head = newNode;
             return;
         }
@@ -242,12 +242,56 @@ public:
                 std::cout << "Invalid position" << std::endl;
                 return;
             }
-            
+
             prev = curr;
             curr = curr->next;
         }
 
         prev->next = new ListNode(value, curr);
+    }
+
+    void removePosition(int position)
+    {
+        if (position < 0)
+        {
+            std::cout << "Invalid position" << std::endl;
+            return;
+        }
+
+        if (position == 0)
+        {
+            if (head == nullptr)
+            {
+                std::cout << "Invalid position" << std::endl;
+                return;
+            }
+            ListNode *oldNode = head;
+            head = head->next;
+            delete oldNode;
+            return;
+        }
+
+        ListNode *prev = nullptr, *curr = head;
+        for (int i = 0; i < position; i++)
+        {
+            if (curr == nullptr)
+            {
+                std::cout << "Invalid position" << std::endl;
+                return;
+            }
+
+            prev = curr;
+            curr = curr->next;
+        }
+
+        if (curr == nullptr)
+        {
+            std::cout << "Invalid position" << std::endl;
+            return;
+        }
+
+        prev->next = curr->next;
+        delete curr;
     }
 };
 #endif

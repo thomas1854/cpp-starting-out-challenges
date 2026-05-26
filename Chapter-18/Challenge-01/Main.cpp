@@ -78,6 +78,11 @@ int main()
     list.insertPosition(2, 1010);
     list.insertPosition(5, 101010);
     list.insertPosition(100, 5);        // Expected to print invalid position
+    std::cout << "The list after success insertions: " << std::endl;
+    list.displayList();
+    list.removePosition(2);
+    list.removePosition(6);             // Expected to print invalid position
+    std::cout << "The list after success deletions: " << std::endl;
     list.displayList();
     std::cout << "Cleaning up and exiting." << std::endl;
     return 0;
