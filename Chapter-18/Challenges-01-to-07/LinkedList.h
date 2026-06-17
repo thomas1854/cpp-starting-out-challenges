@@ -7,7 +7,8 @@
  */
 
 #include <iostream>
-
+#include <stdexcept>
+#include <string>
 /**
  * @class LinkedList
  * @brief Singly-linked list storing integer values.
@@ -293,5 +294,24 @@ public:
         prev->next = curr->next;
         delete curr;
     }
+
+    int &operator[](int index)
+    {
+        if (index < 0)
+            throw std::out_of_range("Negative index");
+        ListNode *current = head;
+        for (int i = 0; i < index; i++)
+        {
+            if (current != nullptr)
+                current = current->next;
+        }
+
+        if (current == nullptr)
+        {
+            throw std::out_of_range("Index " + std::to_string(index) + " is out of bounds!");
+        }
+
+        return current->data;
+    };
 };
 #endif

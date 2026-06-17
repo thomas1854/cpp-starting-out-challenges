@@ -24,6 +24,6 @@ int main()
     std::cout << "Expect: 20->10->30->40\n";
     list.addNode(40, 3);
     list.displayList();
-
+    
     return 0;
 }

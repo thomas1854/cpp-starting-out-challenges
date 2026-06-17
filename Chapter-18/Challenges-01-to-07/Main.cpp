@@ -1,8 +1,8 @@
 /**
  * Challenge-01:
  *  1. Your Own Linked List
-        Design your own linked list class to hold a series of integers. The class should have 
-        member functions for appending, inserting, and deleting nodes. Don’t forget to add a 
+        Design your own linked list class to hold a series of integers. The class should have
+        member functions for appending, inserting, and deleting nodes. Don’t forget to add a
         destructor that destroys the list. Demonstrate the class with a driver program.
  */
 
@@ -62,28 +62,28 @@ int main()
 
     std::cout << "Searching for 25 in the list..." << std::endl;
     int position_25 = list.listSearch(25);
-    if (position_25 != -1) 
+    if (position_25 != -1)
         std::cout << "Found 25 in position " << position_25 << std::endl;
-    else 
+    else
         std::cout << "25 not found in the list" << std::endl;
 
     int position_10 = list.listSearch(10);
-    if (position_10 != -1) 
+    if (position_10 != -1)
         std::cout << "Found 10 in position " << position_10 << std::endl;
-    else 
+    else
         std::cout << "10 not found in the list" << std::endl;
-        
 
     list.insertPosition(0, 10);
     list.insertPosition(2, 1010);
     list.insertPosition(5, 101010);
-    list.insertPosition(100, 5);        // Expected to print invalid position
+    list.insertPosition(100, 5); // Expected to print invalid position
     std::cout << "The list after success insertions: " << std::endl;
     list.displayList();
     list.removePosition(2);
-    list.removePosition(6);             // Expected to print invalid position
+    list.removePosition(6); // Expected to print invalid position
     std::cout << "The list after success deletions: " << std::endl;
     list.displayList();
+    std::cout << "Access the fourth element using index 3: " << list[3] << std::endl; // Expected to print 5
     std::cout << "Cleaning up and exiting." << std::endl;
     return 0;
 }
