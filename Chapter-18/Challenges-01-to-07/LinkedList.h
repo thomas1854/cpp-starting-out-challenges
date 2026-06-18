@@ -218,6 +218,11 @@ public:
         return -1;
     }
 
+    /**
+     * @brief Inserts a value at the specified position.
+     * @param position Zero-based index where the value will be inserted.
+     * @param value Value to insert.
+     */
     void insertPosition(int position, int value)
     {
         if (position < 0)
@@ -251,6 +256,10 @@ public:
         prev->next = new ListNode(value, curr);
     }
 
+    /**
+     * @brief Removes the element at the specified position.
+     * @param position Zero-based index of the element to remove.
+     */
     void removePosition(int position)
     {
         if (position < 0)
@@ -312,6 +321,58 @@ public:
         }
 
         return current->data;
-    };
+    }
+
+    /**
+     * @brief Appends a new element to the end of the list.
+     * @param value Value to insert.
+     */
+    void push_back(int value)
+    {
+        append(value);
+    }
+
+    /**
+     * @brief Inserts a new element at the beginning of the list.
+     * @param value Value to insert.
+     */
+    void push_front(int value)
+    {
+        insertPosition(0, value);
+    }
+
+    /**
+     * @brief Removes the first element from the list.
+     */
+    void pop_front()
+    {
+        removePosition(0);
+    }
+
+    /**
+     * @brief Removes the last element from the list.
+     */
+    void pop_back()
+    {
+        ListNode *current = head;
+        if (current == nullptr)
+        {
+            std::cout << "List is empty!" << std::endl;
+            return;
+        }
+
+        if (current->next == nullptr)
+        {
+            delete head;
+            head = nullptr;
+            return;
+        }
+
+        while (current->next->next != nullptr)
+            current = current->next;
+
+        delete current->next;
+        current->next = nullptr;
+    }
 };
 #endif

@@ -84,6 +84,18 @@ int main()
     std::cout << "The list after success deletions: " << std::endl;
     list.displayList();
     std::cout << "Access the fourth element using index 3: " << list[3] << std::endl; // Expected to print 5
+    std::cout << "Push 505 in the end of the list" << std::endl;
+    list.push_back(505);
+    list.displayList();
+    std::cout << "Push 606 in the front of the list" << std::endl;
+    list.push_front(606);
+    list.displayList();
+    std::cout << "Pop last element of the list" << std::endl;
+    list.pop_back();
+    list.displayList();
+    std::cout << "Pop first element of the list" << std::endl;
+    list.pop_front();
+    list.displayList();
     std::cout << "Cleaning up and exiting." << std::endl;
     return 0;
 }
